@@ -1,12 +1,15 @@
 package com.example.pz1;
 
-import static com.example.pz1.R.drawable.bet;
 import android.graphics.Color;
 import java.util.Random;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.app.Activity;
+import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,26 +22,34 @@ public class MainActivity extends AppCompatActivity {
     private Button btn2;
     private TextView txt2;
     private Button btn3;
+    private TextView Att;
+    private TextView Corr;
+    private TextView Wrong;
+    private TextView timer;
+    int counter = 0;
+    //int correct = 0;
+    //int wrong = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         view();
-        txt.setTextColor(MainActivity.ColorDiagram.getColor());
-        txt2.setTextColor(MainActivity.ColorDiagram.getColor());
-        txt.setText(MainActivity.ColorNames.getColorName());
-        txt2.setText(MainActivity.ColorNames.getColorName());
+        Att.setText("Попыток: "+String.valueOf(counter));
+        Corr.setText("Верно: "+String.valueOf(Check.correct));
+        Wrong.setText("Неверно: "+String.valueOf(Check.wrong));
+
+        timer = (TextView)findViewById(R.id.timer);
+
+
 
 
     }
 
 
 
-
-
     public static class ColorDiagram {
-        // Member variables (properties about the object)
+
         public static String[] mColors = {
                 "#3079ab", // blue
                 "#e15258", // red
@@ -47,12 +58,10 @@ public class MainActivity extends AppCompatActivity {
                 "#ffffff", // white
         };
 
-        // Method (abilities: things the object can do)
         public static int getColor() {
             String color = "";
 
-            // Randomly select a fact
-            Random randomGenerator = new Random(); // Construct a new Random number generator
+            Random randomGenerator = new Random();
             int randomNumber = randomGenerator.nextInt(mColors.length);
 
             color = mColors[randomNumber];
@@ -75,13 +84,48 @@ public class MainActivity extends AppCompatActivity {
         public static String getColorName() {
             String colorName = "";
 
-            Random randomGenerator = new Random(); // Construct a new Random number generator
+            Random randomGenerator = new Random();
             int randomNumber = randomGenerator.nextInt(nColors.length);
 
             colorName = nColors[randomNumber];
             return colorName;
         }
     }
+public static class Check {
+    public static int color1 = MainActivity.ColorDiagram.getColor();
+    public static int color2 = MainActivity.ColorDiagram.getColor();
+    public static String colorN1 = MainActivity.ColorNames.getColorName();
+    public static String colorN2 = MainActivity.ColorNames.getColorName();
+    private static int correct = 0;
+    private static int wrong = 0;
+
+    public static int proverka() {
+        if ((Check.color2 == -13600341 && Check.colorN1 == "Синий") ||
+                (Check.color2 == (-2010536) && Check.colorN1 == "Красный") ||
+                (Check.color2 == (-11422611) && Check.colorN1 == "Зеленый") ||
+                (Check.color2 == (-2053352) && Check.colorN1 == "Желтый") ||
+                (Check.color2 == (-1) && Check.colorN1 == "Белый")) {
+            correct++;
+        } else {
+            wrong++;
+        }
+
+
+        return 0;
+    }
+    public static int proverka1() {
+        if ((Check.color2 == -13600341 && Check.colorN1 == "Синий") ||
+                (Check.color2 == (-2010536) && Check.colorN1 == "Красный") ||
+                (Check.color2 == (-11422611) && Check.colorN1 == "Зеленый") ||
+                (Check.color2 == (-2053352) && Check.colorN1 == "Желтый") ||
+                (Check.color2 == (-1) && Check.colorN1 == "Белый")) {
+            wrong++;
+        } else {
+            correct++;
+        }
+    return 0;
+    }
+}
 
     public void view(){
 
@@ -90,12 +134,42 @@ public class MainActivity extends AppCompatActivity {
         btn3 = (Button)findViewById(R.id.button3);
         txt = (TextView)findViewById(R.id.textView);
         txt2 = (TextView)findViewById(R.id.textView2);
+        Att = (TextView)findViewById(R.id.Att);
+        Corr = (TextView)findViewById(R.id.Corr);
+        Wrong = (TextView)findViewById(R.id.Wrong);
+
+
         MainActivity mActivity= new MainActivity();
+
+
 
         btn3.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        new CountDownTimer(100000, 1000) {
+
+
+                            public void onTick(long millisUntilFinished) {
+                                timer.setText("Осталось: " + millisUntilFinished / 1000+" сек.");
+                            }
+
+                            public void onFinish() {
+                                txt.setVisibility(View.GONE);
+                                txt2.setVisibility(View.GONE);
+                                btn.setVisibility(View.GONE);
+                                btn2.setVisibility(View.GONE);
+                            }
+
+                        }.start();
+                        Check.colorN1=MainActivity.ColorNames.getColorName();
+                        Check.colorN2 = MainActivity.ColorNames.getColorName();
+                        Check.color1 = MainActivity.ColorDiagram.getColor();
+                        Check.color2 = MainActivity.ColorDiagram.getColor();
+                        txt.setTextColor(Check.color1);
+                        txt2.setTextColor(Check.color2);
+                        txt.setText(Check.colorN1);
+                        txt2.setText(Check.colorN2);
                         btn.setVisibility(View.VISIBLE);
                         btn2.setVisibility(View.VISIBLE);
                         txt.setVisibility(View.VISIBLE);
@@ -104,14 +178,28 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+
+
         btn.setOnClickListener(
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            txt.setTextColor(MainActivity.ColorDiagram.getColor());
-                            txt2.setTextColor(MainActivity.ColorDiagram.getColor());
-                            txt.setText(MainActivity.ColorNames.getColorName());
-                            txt2.setText(MainActivity.ColorNames.getColorName());
+                            Check.proverka();
+                            Check.colorN1=MainActivity.ColorNames.getColorName();
+                            Check.colorN2 = MainActivity.ColorNames.getColorName();
+                            Check.color1 = MainActivity.ColorDiagram.getColor();
+                            Check.color2 = MainActivity.ColorDiagram.getColor();
+
+                            txt.setTextColor(Check.color1);
+                            txt2.setTextColor(Check.color2);
+                            txt.setText(Check.colorN1);
+                            txt2.setText(Check.colorN2);
+                            counter++;
+                            Att.setText("Попыток: "+String.valueOf(counter));
+
+                            Corr.setText("Верно: "+String.valueOf(Check.correct));
+                            Wrong.setText("Неверно: "+String.valueOf(Check.wrong));
+
                         }
                     }
             );
@@ -119,10 +207,19 @@ public class MainActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        txt.setTextColor(MainActivity.ColorDiagram.getColor());
-                        txt2.setTextColor(MainActivity.ColorDiagram.getColor());
-                        txt.setText(MainActivity.ColorNames.getColorName());
-                        txt2.setText(MainActivity.ColorNames.getColorName());
+                        Check.proverka1();
+                        Check.colorN1=MainActivity.ColorNames.getColorName();
+                        Check.colorN2 = MainActivity.ColorNames.getColorName();
+                        Check.color1 = MainActivity.ColorDiagram.getColor();
+                        Check.color2 = MainActivity.ColorDiagram.getColor();
+                        txt.setTextColor(Check.color1);
+                        txt2.setTextColor(Check.color2);
+                        txt.setText(Check.colorN1);
+                        txt2.setText(Check.colorN2);
+                        counter++;
+                        Att.setText("Попыток: "+String.valueOf(counter));
+                        Corr.setText("Верно: "+String.valueOf(Check.correct));
+                        Wrong.setText("Неверно: "+String.valueOf(Check.wrong));
                     }
                 }
         );
