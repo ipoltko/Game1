@@ -102,8 +102,8 @@
 
     <TextView
         android:id="@+id/Corr"
-        android:layout_width="110dp"
-        android:layout_height="38dp"
+        android:layout_width="152dp"
+        android:layout_height="35dp"
         android:text="Верно:"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
