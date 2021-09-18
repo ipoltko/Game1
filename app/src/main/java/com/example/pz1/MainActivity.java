@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView Corr;
     private TextView Wrong;
     private TextView timer;
+    private TextView rules;
     int counter = 0;
     //int correct = 0;
     //int wrong = 0;
@@ -39,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
         Corr.setText("Верно: "+String.valueOf(Check.correct));
         Wrong.setText("Неверно: "+String.valueOf(Check.wrong));
 
-        timer = (TextView)findViewById(R.id.timer);
+
+
 
 
 
@@ -137,6 +139,8 @@ public static class Check {
         Att = (TextView)findViewById(R.id.Att);
         Corr = (TextView)findViewById(R.id.Corr);
         Wrong = (TextView)findViewById(R.id.Wrong);
+        timer = (TextView)findViewById(R.id.timer);
+        rules = (TextView)findViewById(R.id.rules);
 
 
         MainActivity mActivity= new MainActivity();
@@ -174,6 +178,7 @@ public static class Check {
                         btn2.setVisibility(View.VISIBLE);
                         txt.setVisibility(View.VISIBLE);
                         txt2.setVisibility(View.VISIBLE);
+
                         btn3.setVisibility(View.GONE);
                     }
                 }
